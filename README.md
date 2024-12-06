@@ -1,37 +1,41 @@
-
 # Flutter Projesi
 
-  
-
 ![İstinye Üniversitesi](https://www.unitededucation.com/linklogoch/istinye-university-logo.png)
-
   
 
 ## Proje Hakkında
 
-[Projenin kısa tanımı ve amacı buraya yazılacak]
+BudgetBuddy, kullanıcıların gelir ve giderlerini kolayca takip edebilecekleri, tasarruf hedefleri belirleyebilecekleri ve harcamalarını kategorize ederek bütçelerini düzenleyebilecekleri bir finans yönetim uygulamasıdır.
 
   
 
 ## Ekibimiz
 
--  **Danışman:**  
+-Yunus Eğriboz
+
+-Atakan Ş
+
+
+-  **Danışman:**
+
 [https://github.com/keyvanarasteh](Keyvan Arasteh)
 
 
 -  **Takım Üyeleri:**
 
-- X [GitHub](GitHub linki)
+- Yunus Eğriboz [GitHub](https://github.com/yunusegriboz)
+
+- Atakan Ş [GitHub](https://github.com/Atakan75)
 
   
 
 ## Özellikler
 
-- [Ana özellik 1]
+- [Kullanıcılar gelir ve gider durumunu takip edebilecek.]
 
-- [Ana özellik 2]
+- [Tasarruf hedefleri belirleyebilecek.]
 
-- [Ana özellik 3]
+- [Harcamalarının bilincinde olabilecek.]
 
   
 
@@ -41,9 +45,6 @@
 
 - Dart
 
-- [Diğer teknolojiler]
-
-  
 
 ## Başlangıç
 
@@ -51,13 +52,8 @@
 
 ### Gereksinimler
 
-- Flutter SDK (sürüm X.X.X)
+- Flutter SDK (3.5.4)
 
-- Dart SDK (sürüm X.X.X)
-
-- [Diğer gerekli yazılımlar]
-
-  
 
 ### Kurulum Adımları
 
@@ -65,7 +61,7 @@
 
 ```bash
 
-git  clone [proje-adresi]
+git  clone [https://github.com/yunusegriboz/BudgetBuddy]
 
 ```
 
@@ -75,7 +71,7 @@ git  clone [proje-adresi]
 
 ```bash
 
-cd [proje-adı]
+cd [BudgetBuddy]
 
 ```
 
@@ -107,15 +103,11 @@ flutter  run
 
 lib/
 
-├── modeller/ # Veri modelleri
+├── screens/ # Uygulama ekranları
 
-├── ekranlar/ # Uygulama ekranları
+├── services/ # Sunucu Servisleri
 
-├── widgets/ # Tekrar kullanılabilir arayüz öğeleri
-
-├── servisler/ # API servisleri
-
-└── yardımcılar/ # Yardımcı fonksiyonlar
+└── widgets/ # Tekrar kullanılabilir arayüz öğeleri
 
 ```
 
@@ -149,19 +141,10 @@ lib/
 
 ## İletişim
 
-- Proje Bağlantısı: [GitHub repository linki]
-
-- İstinye Üniversitesi: [https://www.istinye.edu.tr/](https://www.istinye.edu.tr/)
+- Proje Bağlantısı: [https://github.com/yunusegriboz/BudgetBuddy]
 
   
 
 ## Teşekkürler
 
-- İstinye Üniversitesi'ne destekleri için teşekkür ederiz
-
-- [Diğer teşekkürler]
-
-  
-  
-
-Bunlari degistirmeniz gerekmektedir ;-)
+- Projedeki danışmanlığı için Keyvan Arasteh hocamıza teşekkür ederiz.
