@@ -1,0 +1,1 @@
+// burada temalandirma + renkler + ... yazicaz.

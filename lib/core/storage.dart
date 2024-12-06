@@ -1,0 +1,1 @@
+// hafizaya kalici olarak yazip/okuma islemlerimiz burda yapicaz
