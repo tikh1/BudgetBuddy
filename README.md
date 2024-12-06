@@ -18,7 +18,7 @@ BudgetBuddy, kullanıcıların gelir ve giderlerini kolayca takip edebilecekleri
 
 -  **Danışman:**
 
-[https://github.com/keyvanarasteh] (Keyvan Arasteh)
+[Keyvan Arasteh](https://github.com/keyvanarasteh)
 
 
 -  **Takım Üyeleri:**
