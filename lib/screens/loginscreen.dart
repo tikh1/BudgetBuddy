@@ -20,18 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    
-    //_checkIsLogged();
   }
-  
-  Future<void> _checkIsLogged() async {
-      final prefs = await SharedPreferences.getInstance();
-      final token = await prefs.getString('token');
 
-      if (token != null) {
-        context.go('/home');
-      }
-  }
   Future<void> _login() async {
     final email = _emailController.text;
     final password = _passwordController.text;
@@ -48,7 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _errorMessage = '';
     });
 
-    final url = 'https://budgetbuddy.glosoft.net/api/login'; // API URL'nizi buraya ekleyin
+    final url =
+        'https://budgetbuddy.glosoft.net/api/login'; // API URL'nizi buraya ekleyin
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -68,7 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
           context.go('/home');
         } else {
           setState(() {
-            _errorMessage = 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
+            _errorMessage =
+                'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
           });
         }
       } else {
@@ -124,8 +116,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   : Text('Giriş Yap'),
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                backgroundColor: Colors.blue, // 'primary' yerine 'backgroundColor'
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                backgroundColor:
+                    Colors.blue, // 'primary' yerine 'backgroundColor'
               ),
             ),
             if (_errorMessage.isNotEmpty)
@@ -139,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 20),
             TextButton(
               onPressed: () {
-                          context.go('/register');
+                context.go('/register');
               },
               child: Text(
                 'Üye olmak için tıklayınız',
