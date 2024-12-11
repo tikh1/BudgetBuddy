@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import '../services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'addexpense.dart';
-import 'addincome.dart';
+import 'addexpense_screen.dart';
+import 'addincome_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
