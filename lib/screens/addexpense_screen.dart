@@ -11,9 +11,11 @@ class AddExpense extends StatefulWidget {
 }
 
 class _AddExpenseState extends State<AddExpense> {
+  final _typeController = TextEditingController();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
+  final _dateController = TextEditingController();
   bool _isLoading = false;
   String _errorMessage = '';
 
@@ -21,8 +23,9 @@ class _AddExpenseState extends State<AddExpense> {
     final title = _titleController.text;
     final description = _descriptionController.text;
     final amount = _amountController.text;
+    final date = _dateController.text;
 
-    if (title.isEmpty || description.isEmpty || amount.isEmpty) {
+    if (title.isEmpty || description.isEmpty || amount.isEmpty || date.isEmpty) {
       setState(() {
         _errorMessage = 'Lütfen tüm alanları doldurun';
       });
@@ -36,22 +39,24 @@ class _AddExpenseState extends State<AddExpense> {
 
     final url = API_BASE + API_EXPENDITURES; // API URL'nizi buraya ekleyin
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = await prefs.getString('token');
       final response = await http.post(
         Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'},
         body: json.encode({
+          'type': 2,
           'title': title,
           'description': description,
-          'amount': amount ,
+          'amount': amount,
+          'spending_date': date
         }),
       );
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         if (responseData['success'] == true) {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('token', responseData['data']['token']);
-          context.go('/home');
+          Navigator.pop(context);
         } else {
           setState(() {
             _errorMessage = 'Kayıt başarısız. Lütfen tekrar deneyin.';
@@ -69,6 +74,21 @@ class _AddExpenseState extends State<AddExpense> {
     } finally {
       setState(() {
         _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (pickedDate != null) {
+      setState(() {
+        _dateController.text =
+            "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
       });
     }
   }
@@ -96,6 +116,23 @@ class _AddExpenseState extends State<AddExpense> {
               decoration: InputDecoration(labelText: 'Ücret'),
               keyboardType: TextInputType.number,
             ),
+            TextField(
+              controller: _dateController,
+              readOnly: true,
+              decoration: InputDecoration(
+                labelText: 'Tarih',
+                suffixIcon: Icon(Icons.calendar_today),
+              ),
+              onTap: () => _selectDate(context),
+            ),
+            if (_errorMessage.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Text(
+                  _errorMessage,
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: _isLoading ? null : _addExpense,
