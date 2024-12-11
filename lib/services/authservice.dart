@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../models/api_response.dart';
+import './api.dart';
 
 class AuthService {
   Future<ApiResponse> login(String email, String password) async {
@@ -10,7 +11,7 @@ class AuthService {
       return ApiResponse(success: false, error: 'E-posta ve şifre boş olamaz');
     }
 
-    final url = 'https://budgetbuddy.glosoft.net/api/login'; // API URL
+    final url = API_BASE + API_LOGIN; // API URL
 
     try {
       final response = await http.post(

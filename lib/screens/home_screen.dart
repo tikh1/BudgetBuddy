@@ -3,16 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
-
-
-
+import '../services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
 import 'addexpense.dart';
 import 'addincome.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -26,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String _errorMessage = '';
   double totalIncome = 0.0;
   double totalExpense = 0.0;
+  
   @override
   void initState() {
     super.initState();
@@ -48,13 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _screen() async {
-
     setState(() {
       _isLoading = true;
       _errorMessage = '';
     });
 
-    final url = 'https://budgetbuddy.glosoft.net/api/expenditures/'; // API URL'nizi buraya ekleyin
+    final url = API_BASE + API_EXPENDITURES; // API URL'nizi buraya ekleyin
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = await prefs.getString('token');
@@ -66,23 +62,21 @@ class _HomeScreenState extends State<HomeScreen> {
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         if (responseData['success'] == true) {
-
           final incomes = responseData['data'].map<String>((income) {
             return '${income['title']}|${income['description']}|${income['amount']}|${income['type']}';
           }).toList();
 
-            responseData['data'].forEach((item) {
-              final amount = double.tryParse(item['amount']) ?? 0.0;
-              if (item['type'] == 1) {
-                totalIncome += amount;
-              } else {
-                totalExpense += amount;
-              }
-            });
-            totalBalance = totalIncome - totalExpense;
+          responseData['data'].forEach((item) {
+            final amount = double.tryParse(item['amount']) ?? 0.0;
+            if (item['type'] == 1) {
+              totalIncome += amount;
+            } else {
+              totalExpense += amount;
+            }
+          });
+          totalBalance = totalIncome - totalExpense;
           setState(() {
             this.incomes = incomes;
-            //totalBalance = incomeTotal - expenseTotal;
           });
         } else {
           setState(() {
@@ -104,7 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
   }
-
 
   Widget _buildListItem(String title, String description, String amount, Color backgroundColor) {
     return Container(
@@ -136,11 +129,26 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Future<void> _clearToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    // Navigasyon işlemi token silindikten sonra yapılabilir.
+    context.go('/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('BudgetBuddy'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () async {
+              await _clearToken();
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [

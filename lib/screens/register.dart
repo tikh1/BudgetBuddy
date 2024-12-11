@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../services/api.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -42,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _errorMessage = '';
     });
 
-    final url = 'https://budgetbuddy.glosoft.net/api/register'; // API URL'nizi buraya ekleyin
+    final url = API_BASE + API_REGISTER; // API URL'nizi buraya ekleyin
     try {
       final response = await http.post(
         Uri.parse(url),

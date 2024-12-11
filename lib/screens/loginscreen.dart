@@ -15,13 +15,6 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class ApiResponse {
-  final bool success;
-  final String? error;
-
-  ApiResponse({required this.success, this.error});
-}
-
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController(text: "tikhi@key1.com");
   final _passwordController = TextEditingController();
