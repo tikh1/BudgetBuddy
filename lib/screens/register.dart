@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -57,7 +58,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
         if (responseData['success'] == true) {
-          Navigator.pushReplacementNamed(context, '/login');
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setString('token', responseData['data']['token']);
+          context.go('/login');
         } else {
           setState(() {
             _errorMessage = 'Kayıt başarısız. Lütfen tekrar deneyin.';
