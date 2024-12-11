@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         final responseData = json.decode(response.body);
         if (responseData['success'] == true) {
           final incomes = responseData['data'].map<String>((income) {
-            return '${income['title']}|${income['description']}|${income['amount']}|${income['type']}';
+            return '${income['title']}|${income['description']}|${income['amount']}|${income['spending_date']}|${income['type']}';
           }).toList();
 
           totalIncome = 0;
@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildListItem(
-      String title, String description, String amount, Color backgroundColor) {
+      String title, String description, String amount, String spending_date, Color backgroundColor) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       padding: const EdgeInsets.all(12),
@@ -114,6 +114,11 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(height: 4),
           Text(
             '\$${amount}',
+            style: TextStyle(fontSize: 14, color: Colors.white),
+          ),
+          SizedBox(height: 4),
+          Text(
+            spending_date,
             style: TextStyle(fontSize: 14, color: Colors.white),
           ),
         ],
@@ -182,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ...incomes.map((income) {
                   final parts = income.split('|');
                   return _buildListItem(parts[0], parts[1], parts[2],
-                      parts[3] == "1" ? Colors.green : Colors.red);
+                      parts[3], parts[4] == "1" ? Colors.green : Colors.red);
                 }).toList(),
               ],
             ),
