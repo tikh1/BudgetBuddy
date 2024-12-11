@@ -61,7 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
             final amount = double.tryParse(item['amount']) ?? 0.0;
             item['type'] == 1 ? totalIncome += amount : totalExpense += amount;
           });
+
           totalBalance = totalIncome - totalExpense;
+
           setState(() {
             this.incomes = incomes;
           });
