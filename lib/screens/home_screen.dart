@@ -59,11 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
           responseData['data'].forEach((item) {
             final amount = double.tryParse(item['amount']) ?? 0.0;
-            if (item['type'] == 1) {
-              totalIncome += amount;
-            } else {
-              totalExpense += amount;
-            }
+            item['type'] == 1 ? totalIncome += amount : totalExpense += amount;
           });
           totalBalance = totalIncome - totalExpense;
           setState(() {
