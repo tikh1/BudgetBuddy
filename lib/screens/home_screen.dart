@@ -22,26 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
   String _errorMessage = '';
   double totalIncome = 0.0;
   double totalExpense = 0.0;
-  
+
   @override
   void initState() {
     super.initState();
     _screen();
-    _loadData();
-  }
-
-  Future<void> _loadData() async {
-    final prefs = await SharedPreferences.getInstance();
-    final storedIncomes = prefs.getStringList('incomes') ?? [];
-
-    double incomeTotal = storedIncomes.fold(0.0, (sum, item) {
-      final amount = double.tryParse(item.split('|')[2]) ?? 0.0;
-      return sum + amount;
-    });
-
-    setState(() {
-      incomes = storedIncomes;
-    });
   }
 
   Future<void> _screen() async {
@@ -56,7 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
       final token = await prefs.getString('token');
       final response = await http.get(
         Uri.parse(url),
-        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
       );
 
       if (response.statusCode == 200) {
@@ -80,7 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         } else {
           setState(() {
-            _errorMessage = 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
+            _errorMessage =
+                'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
           });
         }
       } else {
@@ -99,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildListItem(String title, String description, String amount, Color backgroundColor) {
+  Widget _buildListItem(
+      String title, String description, String amount, Color backgroundColor) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       padding: const EdgeInsets.all(12),
@@ -112,7 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             title,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+            style: TextStyle(
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
           ),
           SizedBox(height: 4),
           Text(
@@ -189,7 +180,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 ...incomes.map((income) {
                   final parts = income.split('|');
-                  return _buildListItem(parts[0], parts[1], parts[2], parts[3] == "1" ? Colors.green : Colors.red);
+                  return _buildListItem(parts[0], parts[1], parts[2],
+                      parts[3] == "1" ? Colors.green : Colors.red);
                 }).toList(),
               ],
             ),
@@ -226,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AddIncome()),
-            ).then((_) => _loadData()),
+            ).then((_) => _screen()),
             tooltip: 'Gelir Ekle',
             child: Icon(Icons.add, color: Colors.white),
             backgroundColor: Colors.green,
@@ -236,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AddExpense()),
-            ).then((_) => _loadData()),
+            ).then((_) => _screen()),
             tooltip: 'Gider Ekle',
             child: Icon(Icons.remove, color: Colors.white),
             backgroundColor: Colors.red,
