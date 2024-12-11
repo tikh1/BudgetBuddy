@@ -1,5 +1,3 @@
-// uygulamada sayfalari ve navigasyon islemlerini burada tanimlicaz
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../screens/loginscreen.dart';
@@ -10,11 +8,29 @@ import '../screens/home_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/search_screen.dart';
 import '../screens/voice_screen.dart';
-import 'authservice.dart'; 
+import 'authservice.dart';
+
+final AuthService _authService = AuthService();
 
 // Router yapılandırması
 final router = GoRouter(
-  initialLocation: '/login', // Başlangıç rotası
+  initialLocation: '/login',
+  redirect: (BuildContext context, GoRouterState state) async {
+    final bool isAuthenticated = await _authService.isAuthenticated();
+
+    final isLoggingIn = state.matchedLocation == '/login';
+    final isRegistering = state.matchedLocation == '/register';
+
+    if (!isAuthenticated && !isLoggingIn && !isRegistering) {
+      return '/login';
+    }
+
+    if (isAuthenticated && (isLoggingIn || isRegistering)) {
+      return '/home';
+    }
+
+    return null;
+  },
   routes: [
     GoRoute(
       path: '/login',
@@ -31,6 +47,6 @@ final router = GoRouter(
     GoRoute(
       path: '/history',
       builder: (context, state) => const HistoryScreen(),
-    )
+    ),
   ],
 );
