@@ -6,10 +6,20 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../services/authservice.dart';
+
+final AuthService _authService = AuthService();
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
+}
+
+class ApiResponse {
+  final bool success;
+  final String? error;
+
+  ApiResponse({required this.success, this.error});
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -26,55 +36,23 @@ class _LoginScreenState extends State<LoginScreen> {
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    if (email.isEmpty || password.isEmpty) {
-      setState(() {
-        _errorMessage = 'Lütfen tüm alanları doldurun';
-      });
-      return;
-    }
 
     setState(() {
       _isLoading = true;
       _errorMessage = '';
     });
 
-    final url =
-        'https://budgetbuddy.glosoft.net/api/login'; // API URL'nizi buraya ekleyin
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'email': email,
-          'password': password,
-        }),
-      );
+    final loginResponse = await _authService.login(email, password);
 
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('token', responseData['data']['token']);
-          _errorMessage = responseData['data']['token'];
-          context.go('/home');
-        } else {
-          setState(() {
-            _errorMessage =
-                'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
-          });
-        }
-      } else {
-        setState(() {
-          _errorMessage = 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
-        });
-      }
-    } catch (error) {
-      setState(() {
-        _errorMessage = '{$error}';
-      });
-    } finally {
+    if (loginResponse.success) {
       setState(() {
         _isLoading = false;
+      });
+      context.go('/home');
+    } else {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = loginResponse.error!;
       });
     }
   }
