@@ -54,6 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
             return '${income['title']}|${income['description']}|${income['amount']}|${income['type']}';
           }).toList();
 
+          totalIncome = 0;
+          totalExpense = 0;
+
           responseData['data'].forEach((item) {
             final amount = double.tryParse(item['amount']) ?? 0.0;
             if (item['type'] == 1) {
