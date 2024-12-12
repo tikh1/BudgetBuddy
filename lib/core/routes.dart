@@ -5,9 +5,6 @@ import '../screens/register_screen.dart';
 import '../screens/history_screen.dart';
 import '../screens/loading_screen.dart';
 import '../screens/home_screen.dart';
-import '../screens/profile_screen.dart';
-import '../screens/search_screen.dart';
-import '../screens/voice_screen.dart';
 import '../services/authservice.dart';
 
 final AuthService _authService = AuthService();

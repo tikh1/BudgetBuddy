@@ -1,0 +1,5 @@
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">budgetbuddy.glosoft.net</domain>
+    </domain-config>
+</network-security-config>

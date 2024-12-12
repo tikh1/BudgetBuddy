@@ -1,5 +1,5 @@
-name: flutter_app
-description: "A new Flutter project."
+name: budgetbuddy
+description: "BudgetBuddy, kullanıcıların gelir ve giderlerini kolayca takip edebilecekleri, tasarruf hedefleri belirleyebilecekleri ve harcamalarını kategorize ederek bütçelerini düzenleyebilecekleri bir finans yönetim uygulamasıdır."
 publish_to: 'none'
 version: 0.1.0
 
