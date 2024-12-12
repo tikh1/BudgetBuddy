@@ -117,7 +117,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _clearToken() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
-    // Navigasyon işlemi token silindikten sonra yapılabilir.
     context.go('/login');
   }
 
