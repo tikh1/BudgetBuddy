@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildListItem(String title, String description, String amount,
-      String spending_date, Color backgroundColor) {
+      String spendingDate, Color backgroundColor) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       padding: const EdgeInsets.all(12),
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SizedBox(height: 4),
           Text(
-            spending_date,
+            spendingDate,
             style: TextStyle(fontSize: 14, color: Colors.white),
           ),
         ],
