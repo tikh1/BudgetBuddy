@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'core/routes.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized(); // Flutter widget'larını başlat
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      routerConfig: router, // go_router yapılandırmamızı kullan
-      debugShowCheckedModeBanner: false, // Debug bandını kaldır
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

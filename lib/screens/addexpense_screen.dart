@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../services/api.dart';
@@ -11,7 +10,6 @@ class AddExpense extends StatefulWidget {
 }
 
 class _AddExpenseState extends State<AddExpense> {
-  final _typeController = TextEditingController();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
@@ -25,7 +23,10 @@ class _AddExpenseState extends State<AddExpense> {
     final amount = _amountController.text;
     final date = _dateController.text;
 
-    if (title.isEmpty || description.isEmpty || amount.isEmpty || date.isEmpty) {
+    if (title.isEmpty ||
+        description.isEmpty ||
+        amount.isEmpty ||
+        date.isEmpty) {
       setState(() {
         _errorMessage = 'Lütfen tüm alanları doldurun';
       });
@@ -43,7 +44,10 @@ class _AddExpenseState extends State<AddExpense> {
       final token = await prefs.getString('token');
       final response = await http.post(
         Uri.parse(url),
-        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
         body: json.encode({
           'type': 2,
           'title': title,

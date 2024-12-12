@@ -9,9 +9,8 @@ import '../services/authservice.dart';
 
 final AuthService _authService = AuthService();
 
-// Router yapılandırması
 final router = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/loading',
   redirect: (BuildContext context, GoRouterState state) async {
     final bool isAuthenticated = await _authService.isAuthenticated();
 
@@ -29,6 +28,10 @@ final router = GoRouter(
     return null;
   },
   routes: [
+    GoRoute(
+      path: '/loading',
+      builder: (context, state) => const LoadingScreen(),
+    ),
     GoRoute(
       path: '/login',
       builder: (context, state) => LoginScreen(),

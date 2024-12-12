@@ -34,7 +34,7 @@ class LoadingScreen extends StatelessWidget {
             // CircularProgressIndicator(),
 
             InkWell(
-              onTap: () => context.go("/home"),
+              onTap: () => context.go("/login"),
               child: SizedBox(
                 width: 300,
                 child: DotLottieLoader.fromAsset(
@@ -49,7 +49,7 @@ class LoadingScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // biraz boslok lazim
+            // biraz bosluk lazim
             SizedBox(height: 20),
           ],
         ),
