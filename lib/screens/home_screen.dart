@@ -1,8 +1,5 @@
-import 'package:dotlottie_loader/dotlottie_loader.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
 import '../services/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'addexpense_screen.dart';
@@ -35,10 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
       _errorMessage = '';
     });
 
-    final url = API_BASE + API_EXPENDITURES; // API URL'nizi buraya ekleyin
+    const url = API_BASE + API_EXPENDITURES; // API URL'nizi buraya ekleyin
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = await prefs.getString('token');
+      final token = prefs.getString('token');
       final response = await http.get(
         Uri.parse(url),
         headers: {
@@ -67,16 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             this.incomes = incomes;
           });
-        } else {
-          setState(() {
-            _errorMessage =
-                'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
-          });
         }
-      } else {
-        setState(() {
-          _errorMessage = 'Giriş başarısız. Lütfen bilgilerinizi kontrol edin.';
-        });
       }
     } catch (error) {
       setState(() {
@@ -89,8 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildListItem(
-      String title, String description, String amount, String spending_date, Color backgroundColor) {
+  Widget _buildListItem(String title, String description, String amount,
+      String spending_date, Color backgroundColor) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       padding: const EdgeInsets.all(12),
@@ -186,8 +174,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 ...incomes.map((income) {
                   final parts = income.split('|');
-                  return _buildListItem(parts[0], parts[1], parts[2],
-                      parts[3], parts[4] == "1" ? Colors.green : Colors.red);
+                  return _buildListItem(parts[0], parts[1], parts[2], parts[3],
+                      parts[4] == "1" ? Colors.green : Colors.red);
                 }).toList(),
               ],
             ),

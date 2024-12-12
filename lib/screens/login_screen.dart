@@ -1,11 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:budgetbuddy/screens/home_screen.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../services/authservice.dart';
 
 final AuthService _authService = AuthService();
@@ -28,7 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _login() async {
     final email = _emailController.text;
     final password = _passwordController.text;
-
 
     setState(() {
       _isLoading = true;
