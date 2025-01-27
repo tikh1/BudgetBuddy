@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import '../services/api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../core/themes.dart';
 import 'addexpense_screen.dart';
 import 'addincome_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -23,16 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _screen();
+    _fetchData();
   }
 
-  Future<void> _screen() async {
+  Future<void> _fetchData() async {
     setState(() {
       _isLoading = true;
       _errorMessage = '';
     });
 
-    const url = API_BASE + API_EXPENDITURES; // API URL'nizi buraya ekleyin
+    const url = API_BASE + API_EXPENDITURES;
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
@@ -77,8 +79,13 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildListItem(String title, String description, String amount,
-      String spendingDate, Color backgroundColor) {
+  Future<void> _clearToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    context.go('/login');
+  }
+
+  Widget _buildListItem(String title, String description, String amount, String spendingDate, Color backgroundColor) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
       padding: const EdgeInsets.all(12),
@@ -91,119 +98,114 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             title,
-            style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             description,
-            style: TextStyle(fontSize: 14, color: Colors.white70),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7)),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
-            '\$${amount}',
-            style: TextStyle(fontSize: 14, color: Colors.white),
+            '\₺{amount}',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             spendingDate,
-            style: TextStyle(fontSize: 14, color: Colors.white),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
           ),
         ],
       ),
     );
   }
 
-  Future<void> _clearToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
-    context.go('/login');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('BudgetBuddy'),
+        title: Text(
+          'BudgetBuddy',
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onSecondary,
+              ),
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              await _clearToken();
+            icon: Icon(
+              Provider.of<ThemeProvider>(context).isDarkMode
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+              color: Theme.of(context).colorScheme.onSecondary,
+            ),
+            onPressed: () {
+              Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
             },
           ),
+          IconButton(
+            icon: Icon(Icons.logout, color: Theme.of(context).colorScheme.onSecondary),
+            onPressed: _clearToken,
+          ),
         ],
+        backgroundColor: Theme.of(context).colorScheme.secondary,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                gradient: LinearGradient(
-                  colors: [Color(0xFF236570), Color(0xFF7ED647)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              padding: EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Durum',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    '\$${totalBalance.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      gradient: LinearGradient(
+                        colors: [
+                          Theme.of(context).colorScheme.primary,
+                          Theme.of(context).colorScheme.secondary
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Durum',
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          '\₺${totalBalance.toStringAsFixed(2)}',
+                          style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              children: [
-                ...incomes.map((income) {
-                  final parts = income.split('|');
-                  return _buildListItem(parts[0], parts[1], parts[2], parts[3],
-                      parts[4] == "1" ? Colors.green : Colors.red);
-                }).toList(),
-              ],
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16.0),
-            color: Colors.grey[200],
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Mevcut Durumunuz:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 8),
-                Text(
-                  '\$${totalBalance.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: totalBalance >= 0 ? Colors.green : Colors.red,
+                Expanded(
+                  child: ListView(
+                    children: [
+                      ...incomes.map((income) {
+                        final parts = income.split('|');
+                        return _buildListItem(
+                          parts[0],
+                          parts[1],
+                          parts[2],
+                          parts[3],
+                          parts[4] == "1"
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.error,
+                        );
+                      }).toList(),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -211,20 +213,20 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AddIncome()),
-            ).then((_) => _screen()),
+            ).then((_) => _fetchData()),
             tooltip: 'Gelir Ekle',
-            child: Icon(Icons.add, color: Colors.white),
-            backgroundColor: Colors.green,
+            child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
+            backgroundColor: Theme.of(context).colorScheme.primary,
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           FloatingActionButton(
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => AddExpense()),
-            ).then((_) => _screen()),
+            ).then((_) => _fetchData()),
             tooltip: 'Gider Ekle',
-            child: Icon(Icons.remove, color: Colors.white),
-            backgroundColor: Colors.red,
+            child: Icon(Icons.remove, color: Theme.of(context).colorScheme.onPrimary),
+            backgroundColor: Theme.of(context).colorScheme.error,
           ),
         ],
       ),
