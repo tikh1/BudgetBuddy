@@ -11,7 +11,7 @@ class AuthService {
       return ApiResponse(success: false, error: 'E-posta ve şifre boş olamaz');
     }
 
-    final url = API_BASE + API_LOGIN; // API URL
+    const url = API_BASE + API_LOGIN; // API URL
 
     try {
       final response = await http.post(
