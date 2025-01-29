@@ -9,8 +9,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../services/authservice.dart';
+import '../services/dataservice.dart';
 
 final AuthService _authService = AuthService();
+final DataService _dataService = DataService();
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -37,46 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
       _errorMessage = '';
     });
 
-    const url = API_BASE + API_EXPENDITURES;
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('token');
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token'
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
-        if (responseData['success'] == true) {
-          final incomes = responseData['data'].map<String>((income) {
-            return '${income['title']}|${income['description']}|${income['amount']}|${income['spending_date']}|${income['type']}';
-          }).toList();
-
-          totalIncome = 0;
-          totalExpense = 0;
-
-          responseData['data'].forEach((item) {
-            final amount = double.tryParse(item['amount']) ?? 0.0;
-            item['type'] == 1 ? totalIncome += amount : totalExpense += amount;
-          });
-
-          totalBalance = totalIncome - totalExpense;
-
-          setState(() {
-            this.incomes = incomes;
-          });
-        }
-      }
-    } catch (error) {
+    final userTransactions = await _dataService.fetchUserTransactionHistory();
+    if (userTransactions.success) {
+      final transactionData = userTransactions.data![0] as Map<String, dynamic>;
       setState(() {
-        _errorMessage = '{$error}';
-      });
-    } finally {
-      setState(() {
+        incomes = transactionData['incomes'] as List<String>;
+        totalIncome = transactionData['totalincome'].toDouble();
+        totalExpense = transactionData['totalexpense'].toDouble();
+        totalBalance = transactionData['totalbalance'].toDouble();
         _isLoading = false;
       });
     }
