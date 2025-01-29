@@ -8,6 +8,9 @@ import 'addincome_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../services/authservice.dart';
+
+final AuthService _authService = AuthService();
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -79,9 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _clearToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token');
+  Future<void> _logoutAndRedirectToLogin() async {
+    _authService.logout();
     context.go('/login');
   }
 
@@ -212,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             icon: Icon(Icons.logout,
                                 color:
                                     Theme.of(context).colorScheme.onBackground),
-                            onPressed: _clearToken,
+                            onPressed: _logoutAndRedirectToLogin,
                           ),
                         ],
                       ),
