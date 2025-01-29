@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
-import '../services/api.dart';
 import '../core/themes.dart';
 import 'addexpense_screen.dart';
 import 'addincome_screen.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../services/authservice.dart';
 import '../services/dataservice.dart';
 
@@ -23,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
   double totalBalance = 0.0;
   List<String> incomes = [];
   bool _isLoading = false;
-  String _errorMessage = '';
   double totalIncome = 0.0;
   double totalExpense = 0.0;
 
@@ -36,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _fetchData() async {
     setState(() {
       _isLoading = true;
-      _errorMessage = '';
     });
 
     final userTransactions = await _dataService.fetchUserTransactionHistory();
