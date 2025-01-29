@@ -21,8 +21,6 @@ class AppTheme {
       onSecondary: Colors.white,
       surface: Color(0xFFF5F5F5),
       onSurface: Color(0xFF1E1E1E),
-      background: Color(0xFFF5F5F5),
-      onBackground: Color(0xFF1E1E1E),
       error: Color(0xFFD32F2F),
       onError: Colors.white,
     ),
@@ -53,7 +51,7 @@ class AppTheme {
       onSecondary: Colors.black,
       tertiary: const Color.fromARGB(179, 158, 69, 49),
       onTertiary: Colors.black,
-      surface: Colors.grey.shade900,
+      surface: Color(0xff171717),
       onSurface: Colors.white,
     ),
     textTheme: TextTheme(
