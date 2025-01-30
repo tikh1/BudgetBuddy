@@ -6,6 +6,7 @@ import 'addexpense_screen.dart';
 import 'addincome_screen.dart';
 import '../services/authservice.dart';
 import '../services/dataservice.dart';
+import '../widgets/bottom_menu.dart';
 
 final AuthService _authService = AuthService();
 final DataService _dataService = DataService();
@@ -262,6 +263,8 @@ Widget build(BuildContext context) {
                 ),
               ],
             ),
+            bottomNavigationBar: BottomMenu(),
+
     );
   }
 }
