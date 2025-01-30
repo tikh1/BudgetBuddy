@@ -27,6 +27,7 @@ class AuthService {
         final responseData = json.decode(response.body);
         if (responseData['success'] == true) {
           saveToken(responseData['data']['token']);
+          saveUsername(responseData['data']['user']['name']);
           return ApiResponse(success: true);
         } else {
           return ApiResponse(
@@ -46,6 +47,11 @@ class AuthService {
   Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
+  }
+
+  Future<void> saveUsername(String username) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('xusernamex', username);
   }
 
   Future<String?> getToken() async {
