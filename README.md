@@ -153,6 +153,10 @@ lib/
 ![](assets/screenshot/white/profile.png)
 ![](assets/screenshot/white/about.png)
 ![](assets/screenshot/white/addexpense.png)
+
+## Demo Videosu
+
+https://github.com/user-attachments/assets/f3970478-66b9-49a3-a5ce-90a717cc85ad
   
 
 ## Projeye Katkı Sağlama
