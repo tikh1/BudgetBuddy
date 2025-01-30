@@ -30,6 +30,14 @@ class BottomMenu extends StatelessWidget {
               CupertinoIcons.person,
             ),
           ),
+          IconButton(
+            onPressed: () {
+              context.go("/about");
+            },
+            icon: Icon(
+              CupertinoIcons.info,
+            ),
+          ),
         ],
       ),
     );

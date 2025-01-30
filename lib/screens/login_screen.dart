@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../services/authservice.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final AuthService _authService = AuthService();
 
@@ -14,6 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
   String _errorMessage = '';
+  String _username = '';
   @override
   void initState() {
     super.initState();
@@ -30,17 +32,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final loginResponse = await _authService.login(email, password);
 
-    if (loginResponse.success) {
-      setState(() {
-        _isLoading = false;
-      });
-      context.go('/home');
-    } else {
-      setState(() {
-        _isLoading = false;
-        _errorMessage = loginResponse.error!;
-      });
-    }
+if (loginResponse.success) {
+  setState(() {
+    _isLoading = false;
+    _username = loginResponse.username ?? "Kullanıcı"; // Eğer username null ise "Kullanıcı" kullan
+  });
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('username', _username);  // Kaydediyoruz
+  context.go('/home');
+} else {
+  setState(() {
+    _isLoading = false;
+    _errorMessage = loginResponse.error!;
+  });
+}
+
   }
 
   @override

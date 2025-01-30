@@ -4,4 +4,6 @@ class ApiResponse {
   final List<dynamic>? data;
 
   ApiResponse({required this.success, this.error, this.data});
+
+  get username => null;
 }

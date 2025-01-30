@@ -7,6 +7,8 @@ import 'addincome_screen.dart';
 import '../services/authservice.dart';
 import '../services/dataservice.dart';
 import '../widgets/bottom_menu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 final AuthService _authService = AuthService();
 final DataService _dataService = DataService();
@@ -17,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String username = "Kullanıcı";
   double totalBalance = 0.0;
   List<String> incomes = [];
   bool _isLoading = false;
@@ -26,7 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _loadUsername();
     _fetchData();
+     
   }
 
   Future<void> _fetchData() async {
@@ -45,9 +50,26 @@ class _HomeScreenState extends State<HomeScreen> {
         _isLoading = false;
       });
     }
+      await _loadUsername();
+        setState(() {
+    _isLoading = false;
+  });
   }
 
+Future<void> _loadUsername() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? savedUsername = prefs.getString('username');
+
+  setState(() {
+    username = savedUsername ?? "Kullanıcı";
+  });
+}
+
+
+
   Future<void> _logoutAndRedirectToLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('username');
     _authService.logout();
     context.go('/login');
   }
@@ -81,7 +103,7 @@ Widget build(BuildContext context) {
                                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                           color: Theme.of(context).colorScheme.onBackground,
                                         )),
-                                Text('Cansu',
+                                Text('${username}',
                                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                                           color: Theme.of(context).colorScheme.onBackground,
                                           fontWeight: FontWeight.bold,

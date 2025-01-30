@@ -1,3 +1,4 @@
+import 'package:budgetbuddy/screens/about_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../screens/login_screen.dart';
@@ -47,6 +48,10 @@ final router = GoRouter(
     GoRoute(
       path: '/profile',
       builder: (context, state) => const ProfileScreen(),
+    ),
+    GoRoute(
+      path: '/about',
+      builder: (context, state) => const AboutScreen(),
     ),
   ],
 );
