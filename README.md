@@ -45,9 +45,6 @@ BudgetBuddy, kullanıcıların gelir ve giderlerini kolayca takip edebilecekleri
 
 - Dart
 
-
-## Başlangıç
-
   
 
 ### Gereksinimler
@@ -103,11 +100,39 @@ flutter  run
 
 lib/
 
+├── core/ # Uygulamanın kök dosyaları
+
+- constants.dart
+- router.dart
+- storage.dart
+- themes.dart
+
+├── models/ # Modeller
+
+- api_response.dart
+- login_response.dart
+
 ├── screens/ # Uygulama ekranları
+
+- about_screen.dart
+- addexpense_screen.dart
+- addincome_screen.dart
+- home_screen.dart
+- loading_screen.dart
+- login_screen.dart
+- register_screen.dart
+- settings_page.dart
 
 ├── services/ # Sunucu Servisleri
 
+- api.dart
+- authservice.dart
+- dataservice.dart
+
 └── widgets/ # Tekrar kullanılabilir arayüz öğeleri
+
+- bottom_menu.dart
+- logo.dart
 
 ```
 
@@ -117,6 +142,17 @@ lib/
 
 [Uygulama ekran görüntüleri buraya eklenecek]
 
+![](assets/screenshot/loading.png)
+
+![](assets/screenshot/black/homescreen.png)
+![](assets/screenshot/black/profile.png)
+![](assets/screenshot/black/about.png)
+![](assets/screenshot/black/addexpense.png)
+  
+![](assets/screenshot/white/homescreen.png)
+![](assets/screenshot/white/profile.png)
+![](assets/screenshot/white/about.png)
+![](assets/screenshot/white/addexpense.png)
   
 
 ## Projeye Katkı Sağlama
