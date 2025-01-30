@@ -33,7 +33,8 @@ class AppTheme {
       labelLarge: GoogleFonts.roboto(color: Colors.black),
       titleSmall: GoogleFonts.pattaya(color: Colors.black),
       titleMedium: GoogleFonts.roboto(color: Colors.black),
-      titleLarge: GoogleFonts.pattaya(color: Colors.black),
+      //titleLarge: GoogleFonts.roboto(color: Colors.black),
+      titleLarge: GoogleFonts.inter(color: Colors.black),
       headlineSmall: GoogleFonts.aBeeZee(color: Colors.black),
       headlineMedium: GoogleFonts.aBeeZee(color: Colors.black),
       headlineLarge: GoogleFonts.aBeeZee(color: Colors.black),
@@ -43,18 +44,19 @@ class AppTheme {
     ),
   );
 
-  static ThemeData darktheme = ThemeData(
-    colorScheme: ColorScheme.dark(
-      primary: Colors.teal.shade400,
-      onPrimary: Colors.white,
-      secondary: Colors.orangeAccent,
-      onSecondary: Colors.black,
-      tertiary: const Color.fromARGB(179, 158, 69, 49),
-      onTertiary: Colors.black,
-      surface: Color(0xff171717),
-      onSurface: Colors.white,
-    ),
-    textTheme: TextTheme(
+static ThemeData darktheme = ThemeData(
+  colorScheme: ColorScheme.dark(
+    background: Colors.black,
+    primary: Color(0xFF4A90E2), // Hafif mavi vurgu
+    onPrimary: Colors.white,
+    secondary: Color(0xFF2E2E2E), // Koyu gri yüzey
+    onSecondary: Colors.white,
+    surface: Color(0xFF1E1E1E), // Hafif gri yüzey
+    onSurface: Colors.white70,
+    error: Color(0xFFFF3B30), // Kırmızı vurgu (dolar işareti gibi)
+    onError: Colors.white,
+  ),
+  textTheme: TextTheme(
       bodySmall: GoogleFonts.roboto(color: Colors.white),
       bodyMedium: GoogleFonts.roboto(color: Colors.white),
       bodyLarge: GoogleFonts.roboto(color: Colors.white),
@@ -63,13 +65,14 @@ class AppTheme {
       labelLarge: GoogleFonts.roboto(color: Colors.white),
       titleSmall: GoogleFonts.pattaya(color: Colors.white),
       titleMedium: GoogleFonts.roboto(color: Colors.white),
-      titleLarge: GoogleFonts.pattaya(color: Colors.white),
+      titleLarge: GoogleFonts.roboto(color: Colors.white),
       headlineSmall: GoogleFonts.aBeeZee(color: Colors.white),
       headlineMedium: GoogleFonts.aBeeZee(color: Colors.white),
       headlineLarge: GoogleFonts.aBeeZee(color: Colors.white),
       displaySmall: GoogleFonts.abrilFatface(color: Colors.white),
       displayMedium: GoogleFonts.pattaya(color: Colors.white),
       displayLarge: GoogleFonts.pattaya(color: Colors.white),
-    ),
-  );
+  ),
+);
+
 }
