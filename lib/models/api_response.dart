@@ -1,9 +1,9 @@
 class ApiResponse {
   final bool success;
   final String? error;
-  final List<dynamic>? data;
+  final Map<String, dynamic>? data;
 
   ApiResponse({required this.success, this.error, this.data});
 
-  get username => null;
+  String? get username => data?['user']?['name'];
 }

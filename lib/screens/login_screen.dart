@@ -21,34 +21,34 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  Future<void> _login() async {
-    final email = _emailController.text;
-    final password = _passwordController.text;
+Future<void> _login() async {
+  final email = _emailController.text;
+  final password = _passwordController.text;
 
+  setState(() {
+    _isLoading = true;
+    _errorMessage = '';
+  });
+
+  final loginResponse = await _authService.login(email, password);
+
+  if (loginResponse.success) {
     setState(() {
-      _isLoading = true;
-      _errorMessage = '';
+      _isLoading = false;
+      _username = loginResponse.username ?? "Kullanıcı"; // Get the username from the API response
     });
 
-    final loginResponse = await _authService.login(email, password);
-
-if (loginResponse.success) {
-  setState(() {
-    _isLoading = false;
-    _username = loginResponse.username ?? "Kullanıcı"; // Eğer username null ise "Kullanıcı" kullan
-  });
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  await prefs.setString('username', _username);  // Kaydediyoruz
-  context.go('/home');
-} else {
-  setState(() {
-    _isLoading = false;
-    _errorMessage = loginResponse.error!;
-  });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('username', _username);  // Store the username
+    context.go('/home');
+  } else {
+    setState(() {
+      _isLoading = false;
+      _errorMessage = loginResponse.error!;
+    });
+  }
 }
 
-  }
 
   @override
   Widget build(BuildContext context) {

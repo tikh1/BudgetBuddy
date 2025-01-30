@@ -49,6 +49,6 @@ class DataService {
       'totalexpense': totalExpense,
       'totalbalance': totalBalance
     };
-    return ApiResponse(success: true, data: [transactionData]);
+return ApiResponse(success: true, data: transactionData);
   }
 }
