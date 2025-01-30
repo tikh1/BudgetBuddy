@@ -38,7 +38,7 @@ class _AddIncomeState extends State<AddIncome> {
       _errorMessage = '';
     });
 
-    final url = API_BASE + API_EXPENDITURES; // API URL'nizi buraya ekleyin
+    const url = API_BASE + API_EXPENDITURES; // API URL'nizi buraya ekleyin
     try {
       final prefs = await SharedPreferences.getInstance();
       final token = await prefs.getString('token');
