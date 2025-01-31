@@ -142,17 +142,17 @@ lib/
 
 [Uygulama ekran görüntüleri buraya eklenecek]
 
-![](assets/screenshot/loading.png)
+![](screenshot/loading.png)
 
-![](assets/screenshot/black/homescreen.png)
-![](assets/screenshot/black/profile.png)
-![](assets/screenshot/black/about.png)
-![](assets/screenshot/black/addexpense.png)
+![](screenshot/black/homescreen.png)
+![](screenshot/black/profile.png)
+![](screenshot/black/about.png)
+![](screenshot/black/addexpense.png)
   
-![](assets/screenshot/white/homescreen.png)
-![](assets/screenshot/white/profile.png)
-![](assets/screenshot/white/about.png)
-![](assets/screenshot/white/addexpense.png)
+![](screenshot/white/homescreen.png)
+![](screenshot/white/profile.png)
+![](screenshot/white/about.png)
+![](screenshot/white/addexpense.png)
 
 ## Demo Videosu
 
