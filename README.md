@@ -11,7 +11,7 @@ BudgetBuddy, kullanıcıların gelir ve giderlerini kolayca takip edebilecekleri
 
 ## Ekibimiz
 
--Yunus Eğriboz
+-Yunus E
 
 -Atakan Ş
 
