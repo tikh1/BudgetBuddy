@@ -23,7 +23,7 @@ BudgetBuddy, kullanıcıların gelir ve giderlerini kolayca takip edebilecekleri
 
 -  **Takım Üyeleri:**
 
-- Yunus Eğriboz [GitHub](https://github.com/yunusegriboz)
+- Yunus E [GitHub](https://github.com/yunusegriboz)
 
 - Atakan Ş [GitHub](https://github.com/Atakan75)
 
